@@ -23,10 +23,7 @@ class Song
   end
 
   def self.create_by_name(name)
-    song = self.new
-    song.name = name
-    song.save
-    song
+    self.new_by_name.save
   end
 
   def self.find_by_name(name)
@@ -42,9 +39,16 @@ class Song
   end
 
   def self.alphabetical
-    self.all.name.sort
+    self.all.sort_by{|song| song.name}
   end
 
+  def self.new_from_filename(name)
+    song = self.new
+    song.name = name.split(" - ").first
+    song.artist_name = name.split(" - ").last[0..-5]
+    song
+  end
+  
   def self.create_from_filename(song)
     self.create_by_name(song[0..-5])
   end
