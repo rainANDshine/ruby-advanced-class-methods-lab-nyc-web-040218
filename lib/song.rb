@@ -12,7 +12,7 @@ class Song
 
   def self.create
     song = self.new
-    self.all << song
+    song.save
     song
   end
 
@@ -25,19 +25,19 @@ class Song
   def self.create_by_name(name)
     song = self.new
     song.name = name
-    self.all << song
+    song.save
     song
   end
 
-  def self.find_by_name(song)
-    self.all.select{|name| self.all.name == song}
+  def self.find_by_name(name)
+    self.all.select{|song| song.name == name}
   end
-
-  def self.find_or_create_by_name(song)
-    if self.all.name.include?(song)
-      self.find_by_name(song)
+  
+  def self.find_or_create_by_name(name)
+    if self.all.any? {|song| song.name == song}
+      self.find_by_name(name)
     else
-      self.create_by_name(song)
+      self.create_by_name(name)
     end
   end
 
